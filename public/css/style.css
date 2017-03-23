@@ -1,0 +1,14 @@
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  width:100%;
+  background: #e4e7ea;
+}
+
+.panel {
+	width: 380px;
+	height: auto;
+	margin: 8% auto 0 auto;
+	padding: 0px 20px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+}

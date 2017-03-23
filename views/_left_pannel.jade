@@ -1,0 +1,24 @@
+doctype html
+html(lang="en")
+  div.leftpanel
+    div.logopanel
+      h1
+        span [
+        b  ERP
+        span  ]
+    div.leftpanelinner
+      h5.sidebartitle 功能栏
+      ul.nav.nav-pills.nav-stacked.nav-bracket
+        li.li-home.active
+          a(href="/dashboard" target="mainFrame")
+            i.fa.fa-home
+            span 仪表盘
+        li.nav-parent
+          a(href="#")
+            i.fa.fa-home
+            span 用户管理
+          ul.children
+            li
+              a(href="/users" target="mainFrame")
+                i.glyphicon.glyphicon-user
+                b 列表

@@ -1,0 +1,19 @@
+extends ../simple_layout
+block content
+	div.container
+		div.panel
+			h2 重置密码
+			p 我们将发送重置操作的邮件至你的邮箱。
+			form.form-resetpassword(action='/resetpassword' method='POST')
+				div.form-group
+					input.form-control(type='text' name='email' placeholder='Email')
+				div.form-group
+					button.btn.btn-primary(style="width:100%" type="button" onclick="site.reset(this)") 发送邮件
+				div.form-group
+					a(href='/signin') 返回
+			if (err)
+				div.alert.alert-danger.error-box
+					span.error-msg #{msg}
+			else
+				div.alert.alert-danger.error-box(style="display:none")
+					span.error-msg

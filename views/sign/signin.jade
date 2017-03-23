@@ -1,0 +1,21 @@
+extends ../simple_layout
+block content
+	div.container
+		div.panel
+			h1 Leeon
+			p Welcome to Leeon's Blog.
+			form.form-login(action='/signin' method='post')
+				div.form-group
+					if email === undefind
+						input.form-control(type='text' name='email' placeholder='Email')
+					else
+						input.form-control(type='text' name='email' placeholder='Email' value="#{email}")
+				div.form-group
+					input.form-control(type='password' name='password', placeholder='password')
+				div.form-group
+					button.btn.btn-primary.btn-login(style="width:100%" type="button") 登录
+				div.form-group
+					a(href='/signup') 注册账号
+					a(href='/resetpassword' style='float:right') 忘记密码？
+			if error_no
+				div.return-error(style="display:none;") #{ error_msg }

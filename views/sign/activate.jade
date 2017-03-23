@@ -1,0 +1,9 @@
+extends ../simple_layout
+block content
+	div.container
+		div.panel
+			h1 #{ title }
+			p #{ content }
+			if loginURL != ''
+				p
+					a(target="_blank" href="#{ loginURL }") 立即登录
