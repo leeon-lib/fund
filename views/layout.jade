@@ -7,11 +7,12 @@ html(lang="en")
     link(rel='stylesheet', href='/css/style.default.css')
   body
     section
-      include ./_left_pannel.jade
+      include ./_left_pannel
       div.mainpanel
-        include ./_header_bar.jade
+        include ./_header_bar
         div.contentpanel
-          iframe(src="/dashboard" scrolling="auto" frameborder="0" style="width:100%;height:800px;" name="mainFrame")
+            div.panel
+                block content
 
 script(src='/js/jquery-1.10.2.min.js')
 script(src='/js/bootstrap.min.js')
