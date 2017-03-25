@@ -9,7 +9,10 @@ var admin =  {};
 // 仪表盘页
 admin.showDashboard = function(req, res, next)
 {/*{{{*/
-	res.render('admin/dashboard');
+	res.render('admin/dashboard', {
+        user: 111,
+        suc: 222
+    });
 }/*}}}*/
 
 module.exports = admin;

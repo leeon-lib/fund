@@ -23,7 +23,7 @@ user.showList = function(req, res, next)
             users: users,
             success: 111,
         }
-        res.render('user/list', data);
+        res.send(222);
     });
 }/*}}}*/
 
