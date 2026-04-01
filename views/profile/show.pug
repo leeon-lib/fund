@@ -1,0 +1,33 @@
+extends ../layout
+block content
+    div.panel-heading
+        h4.panel-title 个人资料
+        a.btn.btn-primary.btn-sm(href="/profile/edit" style="float:right;margin-top:-25px") 编辑资料
+    div.panel-body
+        div.row
+            div.col-md-6
+                table.table
+                    tr
+                        td(style="font-weight:bold;width:120px") 邮箱
+                        td= user.email
+                    tr
+                        td(style="font-weight:bold") 姓名
+                        td= user.name || '未设置'
+                    tr
+                        td(style="font-weight:bold") 等级
+                        td= user.level || '普通用户'
+                    tr
+                        td(style="font-weight:bold") 账号状态
+                        td
+                            if user.is_activated
+                                span.label.label-success 已激活
+                            else
+                                span.label.label-warning 未激活
+                    tr
+                        td(style="font-weight:bold") 注册时间
+                        td= user.created_at ? new Date(user.created_at).toLocaleString() : '-'
+                    tr
+                        td(style="font-weight:bold") 更新时间
+                        td= user.updated_at ? new Date(user.updated_at).toLocaleString() : '-'
+        div(style="margin-top:20px")
+            a.btn.btn-warning(href="/profile/password") 修改密码

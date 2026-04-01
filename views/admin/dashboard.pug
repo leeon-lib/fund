@@ -1,8 +1,58 @@
 extends ../layout
 block content
+    div.row(style="margin-bottom:20px")
+        div.col-md-3
+            div.alert.alert-info(style="text-align:center")
+                h5 用户数
+                h3= userCount || 0
+        div.col-md-3
+            div.alert.alert-success(style="text-align:center")
+                h5 总收入
+                h3 ¥#{totalIncome}
+        div.col-md-3
+            div.alert.alert-danger(style="text-align:center")
+                h5 总支出
+                h3 ¥#{totalExpense}
+        div.col-md-3
+            div.alert(class=parseFloat(balance) >= 0 ? 'alert-info' : 'alert-warning' style="text-align:center")
+                h5 结余
+                h3 ¥#{balance}
 
-    div.alert.alert-danger
-        span 欢迎啊
-    div.alert.alert-success
-        span #{ user }
-        span #{ suc }
+    div.row(style="margin-bottom:20px")
+        div.col-md-4
+            div.alert.alert-info(style="text-align:center")
+                h5 基金持仓数
+                h3= fundCount || 0
+        div.col-md-4
+            div.alert.alert-info(style="text-align:center")
+                h5 基金总投入
+                h3 ¥#{totalInvested}
+        div.col-md-4
+            div.alert(class=parseFloat(totalReturn) >= 0 ? 'alert-success' : 'alert-danger' style="text-align:center")
+                h5 基金总收益
+                h3 ¥#{totalReturn}
+
+    div.row
+        div.col-md-12
+            div.panel.panel-default
+                div.panel-heading
+                    h4.panel-title 最近活动记录
+                div.panel-body
+                    table.table.table-striped
+                        thead
+                            tr
+                                th 操作
+                                th 详情
+                                th IP
+                                th 时间
+                        tbody
+                            if activities && activities.length > 0
+                                each a in activities
+                                    tr
+                                        td= a.action
+                                        td= a.detail || '-'
+                                        td= a.ip || '-'
+                                        td= a.created_at ? new Date(a.created_at).toLocaleString() : '-'
+                            else
+                                tr
+                                    td(colspan="4" style="text-align:center") 暂无活动记录

@@ -1,0 +1,52 @@
+extends ../layout
+block content
+    div.panel-heading
+        h4.panel-title 收支记录
+        div(style="float:right;margin-top:-25px")
+            a.btn.btn-primary.btn-sm(href="/expenses/create") + 添加记录
+            |  
+            a.btn.btn-info.btn-sm(href="/expenses/summary") 查看汇总
+    div.panel-body
+        div.row(style="margin-bottom:20px")
+            div.col-md-4
+                div.alert.alert-success(style="text-align:center")
+                    h5 总收入
+                    h3 ¥#{totalIncome}
+            div.col-md-4
+                div.alert.alert-danger(style="text-align:center")
+                    h5 总支出
+                    h3 ¥#{totalExpense}
+            div.col-md-4
+                div.alert(class=parseFloat(balance) >= 0 ? 'alert-info' : 'alert-warning' style="text-align:center")
+                    h5 结余
+                    h3 ¥#{balance}
+        table.table.table-striped.table-bordered
+            thead
+                tr
+                    th 类型
+                    th 分类
+                    th 金额
+                    th 描述
+                    th 日期
+                    th 操作
+            tbody
+                if expenses && expenses.length > 0
+                    each e in expenses
+                        tr
+                            td
+                                if e.type === 'income'
+                                    span.label.label-success 收入
+                                else
+                                    span.label.label-danger 支出
+                            td= e.category
+                            td ¥#{e.amount.toFixed(2)}
+                            td= e.description || '-'
+                            td= e.date ? new Date(e.date).toLocaleDateString() : '-'
+                            td
+                                a.btn.btn-xs.btn-warning(href="/expenses/" + e._id + "/edit") 编辑
+                                |  
+                                form(action="/expenses/" + e._id + "/delete" method="POST" style="display:inline")
+                                    button.btn.btn-xs.btn-danger(type="submit" onclick="return confirm('确认删除？')") 删除
+                else
+                    tr
+                        td(colspan="6" style="text-align:center") 暂无收支记录，点击上方按钮添加

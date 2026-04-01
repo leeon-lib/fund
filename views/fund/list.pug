@@ -1,0 +1,62 @@
+extends ../layout
+block content
+    div.panel-heading
+        h4.panel-title 基金投资组合
+        a.btn.btn-primary.btn-sm(href="/funds/create" style="float:right;margin-top:-25px") + 添加基金
+    div.panel-body
+        div.row(style="margin-bottom:20px")
+            div.col-md-3
+                div.alert.alert-info(style="text-align:center")
+                    h5 总投入
+                    h3 ¥#{totalInvested}
+            div.col-md-3
+                div.alert.alert-info(style="text-align:center")
+                    h5 当前市值
+                    h3 ¥#{totalCurrent}
+            div.col-md-3
+                div.alert(class=parseFloat(totalReturn) >= 0 ? 'alert-success' : 'alert-danger' style="text-align:center")
+                    h5 总收益
+                    h3 ¥#{totalReturn}
+            div.col-md-3
+                div.alert(class=parseFloat(returnRate) >= 0 ? 'alert-success' : 'alert-danger' style="text-align:center")
+                    h5 收益率
+                    h3 #{returnRate}%
+        table.table.table-striped.table-bordered
+            thead
+                tr
+                    th 基金名称
+                    th 代码
+                    th 持有份额
+                    th 买入价
+                    th 当前价
+                    th 投入金额
+                    th 当前市值
+                    th 收益
+                    th 购买日期
+                    th 备注
+                    th 操作
+            tbody
+                if funds && funds.length > 0
+                    each f in funds
+                        - var invested = (f.buy_price * f.amount).toFixed(2)
+                        - var current = (f.current_price * f.amount).toFixed(2)
+                        - var profit = (current - invested).toFixed(2)
+                        tr
+                            td= f.name
+                            td= f.code || '-'
+                            td= f.amount
+                            td= f.buy_price
+                            td= f.current_price
+                            td ¥#{invested}
+                            td ¥#{current}
+                            td(style=parseFloat(profit) >= 0 ? 'color:green' : 'color:red') ¥#{profit}
+                            td= f.buy_date ? new Date(f.buy_date).toLocaleDateString() : '-'
+                            td= f.note || '-'
+                            td
+                                a.btn.btn-xs.btn-warning(href="/funds/" + f._id + "/edit") 编辑
+                                |  
+                                form(action="/funds/" + f._id + "/delete" method="POST" style="display:inline")
+                                    button.btn.btn-xs.btn-danger(type="submit" onclick="return confirm('确认删除？')") 删除
+                else
+                    tr
+                        td(colspan="11" style="text-align:center") 暂无基金记录，点击上方按钮添加
