@@ -15,6 +15,15 @@ var CATEGORIES = {
 // 收支列表页
 expense.showList = function(req, res, next) {
 	var userId = req.signedCookies && Object.keys(req.signedCookies)[0];
+	if (!userId) {
+		return res.render('expense/list', {
+			expenses: [],
+			totalIncome: '0.00',
+			totalExpense: '0.00',
+			balance: '0.00',
+			categories: CATEGORIES
+		});
+	}
 	ExpenseService.getByUserId(userId, function(err, expenses) {
 		if (err) {
 			return next(err);
@@ -48,6 +57,7 @@ expense.showCreate = function(req, res, next) {
 // 添加收支
 expense.create = function(req, res, next) {
 	var userId = req.signedCookies && Object.keys(req.signedCookies)[0];
+	if (!userId) { return res.redirect('/signin'); }
 	var data = {
 		user_id: userId,
 		type: req.body.type,
@@ -116,6 +126,15 @@ expense.remove = function(req, res, next) {
 // 收支汇总页面
 expense.showSummary = function(req, res, next) {
 	var userId = req.signedCookies && Object.keys(req.signedCookies)[0];
+	if (!userId) {
+		return res.render('expense/summary', {
+			incomeTotal: '0.00',
+			expenseTotal: '0.00',
+			balance: '0.00',
+			expenseCategories: [],
+			incomeCategories: []
+		});
+	}
 	ExpenseService.getSummaryByUserId(userId, function(err, summary) {
 		if (err) {
 			return next(err);

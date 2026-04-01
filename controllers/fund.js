@@ -10,6 +10,15 @@ var fund = {};
 // 基金列表页
 fund.showList = function(req, res, next) {
 	var userId = req.signedCookies && Object.keys(req.signedCookies)[0];
+	if (!userId) {
+		return res.render('fund/list', {
+			funds: [],
+			totalInvested: '0.00',
+			totalCurrent: '0.00',
+			totalReturn: '0.00',
+			returnRate: '0.00'
+		});
+	}
 	FundService.getByUserId(userId, function(err, funds) {
 		if (err) {
 			return next(err);
@@ -40,6 +49,7 @@ fund.showCreate = function(req, res, next) {
 // 添加基金
 fund.create = function(req, res, next) {
 	var userId = req.signedCookies && Object.keys(req.signedCookies)[0];
+	if (!userId) { return res.redirect('/signin'); }
 	var data = {
 		user_id: userId,
 		name: validator.trim(req.body.name),

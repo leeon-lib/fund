@@ -11,6 +11,7 @@ var profile = {};
 // 个人资料页面
 profile.show = function(req, res, next) {
 	var userId = req.signedCookies && Object.keys(req.signedCookies)[0];
+	if (!userId) { return res.redirect('/signin'); }
 	User.getUserById(userId, function(err, user) {
 		if (err) {
 			return next(err);
@@ -25,6 +26,7 @@ profile.show = function(req, res, next) {
 // 编辑资料页面
 profile.showEdit = function(req, res, next) {
 	var userId = req.signedCookies && Object.keys(req.signedCookies)[0];
+	if (!userId) { return res.redirect('/signin'); }
 	User.getUserById(userId, function(err, user) {
 		if (err) {
 			return next(err);
@@ -39,6 +41,7 @@ profile.showEdit = function(req, res, next) {
 // 更新资料
 profile.update = function(req, res, next) {
 	var userId = req.signedCookies && Object.keys(req.signedCookies)[0];
+	if (!userId) { return res.redirect('/signin'); }
 	User.getUserById(userId, function(err, user) {
 		if (err) {
 			return next(err);
