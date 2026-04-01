@@ -1,4 +1,5 @@
 var models = require('../models');
+var mongoose = require('mongoose');
 var Expense = models.Expense;
 
 exports.create = function(data, callback) {
@@ -13,7 +14,7 @@ exports.getByUserId = function(userId, callback) {
 };
 
 exports.getById = function(id, callback) {
-	Expense.findOne({ _id: id }, callback);
+	Expense.findOne({ _id: id, deleted_at: null }, callback);
 };
 
 exports.update = function(id, data, callback) {
@@ -27,7 +28,7 @@ exports.remove = function(id, callback) {
 
 exports.getSummaryByUserId = function(userId, callback) {
 	Expense.aggregate([
-		{ $match: { user_id: userId, deleted_at: null } },
+		{ $match: { user_id: mongoose.Types.ObjectId(userId), deleted_at: null } },
 		{ $group: {
 			_id: '$type',
 			total: { $sum: '$amount' },
@@ -38,7 +39,7 @@ exports.getSummaryByUserId = function(userId, callback) {
 
 exports.getCategorySummary = function(userId, type, callback) {
 	Expense.aggregate([
-		{ $match: { user_id: userId, type: type, deleted_at: null } },
+		{ $match: { user_id: mongoose.Types.ObjectId(userId), type: type, deleted_at: null } },
 		{ $group: {
 			_id: '$category',
 			total: { $sum: '$amount' },

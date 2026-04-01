@@ -13,7 +13,7 @@ exports.getByUserId = function(userId, callback) {
 };
 
 exports.getById = function(id, callback) {
-	Fund.findOne({ _id: id }, callback);
+	Fund.findOne({ _id: id, deleted_at: null }, callback);
 };
 
 exports.update = function(id, data, callback) {
