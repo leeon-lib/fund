@@ -1,0 +1,41 @@
+extends ../layout
+block content
+    div.panel-heading
+        h4.panel-title 添加收支记录
+    div.panel-body
+        form(action="/expenses" method="POST")
+            div.form-group
+                label 类型 *
+                select.form-control(name="type" id="expense-type")
+                    option(value="expense") 支出
+                    option(value="income") 收入
+            div.form-group
+                label 分类 *
+                select.form-control(name="category" id="expense-category")
+                    each cat in categories.expense
+                        option(value=cat)= cat
+            div.form-group
+                label 金额 *
+                input.form-control(type="number" name="amount" step="0.01" placeholder="0.00" required)
+            div.form-group
+                label 描述
+                input.form-control(type="text" name="description" placeholder="可选描述")
+            div.form-group
+                label 日期
+                input.form-control(type="date" name="date")
+            button.btn.btn-primary(type="submit") 保存
+            |  
+            a.btn.btn-default(href="/expenses") 取消
+    script.
+        var categories = !{JSON.stringify(categories)};
+        document.getElementById('expense-type').addEventListener('change', function() {
+            var type = this.value;
+            var catSelect = document.getElementById('expense-category');
+            catSelect.innerHTML = '';
+            categories[type].forEach(function(cat) {
+                var option = document.createElement('option');
+                option.value = cat;
+                option.textContent = cat;
+                catSelect.appendChild(option);
+            });
+        });

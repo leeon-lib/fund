@@ -11,5 +11,11 @@ mongoose.connect(config.db, {
 });
 
 require('./user');
+require('./fund');
+require('./expense');
+require('./activity');
 
 exports.User = mongoose.model('User');
+exports.Fund = mongoose.model('Fund');
+exports.Expense = mongoose.model('Expense');
+exports.Activity = mongoose.model('Activity');

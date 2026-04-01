@@ -1,0 +1,30 @@
+extends ../layout
+block content
+    div.panel-heading
+        h4.panel-title 添加基金
+    div.panel-body
+        form(action="/funds" method="POST")
+            div.form-group
+                label 基金名称 *
+                input.form-control(type="text" name="name" placeholder="请输入基金名称" required)
+            div.form-group
+                label 基金代码
+                input.form-control(type="text" name="code" placeholder="请输入基金代码")
+            div.form-group
+                label 持有份额
+                input.form-control(type="number" name="amount" step="0.01" placeholder="0")
+            div.form-group
+                label 买入价格
+                input.form-control(type="number" name="buy_price" step="0.0001" placeholder="0")
+            div.form-group
+                label 当前价格
+                input.form-control(type="number" name="current_price" step="0.0001" placeholder="0")
+            div.form-group
+                label 购买日期
+                input.form-control(type="date" name="buy_date")
+            div.form-group
+                label 备注
+                textarea.form-control(name="note" rows="3" placeholder="可选备注")
+            button.btn.btn-primary(type="submit") 保存
+            |  
+            a.btn.btn-default(href="/funds") 取消

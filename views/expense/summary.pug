@@ -1,0 +1,56 @@
+extends ../layout
+block content
+    div.panel-heading
+        h4.panel-title 收支汇总
+        a.btn.btn-default.btn-sm(href="/expenses" style="float:right;margin-top:-25px") 返回列表
+    div.panel-body
+        div.row(style="margin-bottom:20px")
+            div.col-md-4
+                div.alert.alert-success(style="text-align:center")
+                    h5 总收入
+                    h3 ¥#{incomeTotal}
+            div.col-md-4
+                div.alert.alert-danger(style="text-align:center")
+                    h5 总支出
+                    h3 ¥#{expenseTotal}
+            div.col-md-4
+                div.alert(class=parseFloat(balance) >= 0 ? 'alert-info' : 'alert-warning' style="text-align:center")
+                    h5 结余
+                    h3 ¥#{balance}
+        div.row
+            div.col-md-6
+                h4 支出分类
+                table.table.table-striped
+                    thead
+                        tr
+                            th 分类
+                            th 总金额
+                            th 笔数
+                    tbody
+                        if expenseCategories && expenseCategories.length > 0
+                            each cat in expenseCategories
+                                tr
+                                    td= cat._id
+                                    td ¥#{cat.total.toFixed(2)}
+                                    td= cat.count
+                        else
+                            tr
+                                td(colspan="3" style="text-align:center") 暂无数据
+            div.col-md-6
+                h4 收入分类
+                table.table.table-striped
+                    thead
+                        tr
+                            th 分类
+                            th 总金额
+                            th 笔数
+                    tbody
+                        if incomeCategories && incomeCategories.length > 0
+                            each cat in incomeCategories
+                                tr
+                                    td= cat._id
+                                    td ¥#{cat.total.toFixed(2)}
+                                    td= cat.count
+                        else
+                            tr
+                                td(colspan="3" style="text-align:center") 暂无数据
